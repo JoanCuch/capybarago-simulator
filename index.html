@@ -1,64 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CapybaraGo Gold Simulator</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body { font-family: sans-serif; padding: 2em; max-width: 600px; margin: auto; }
-    canvas { margin-top: 2em; }
-  </style>
-</head>
-
-<body>
-  <h1>Gold Accumulation Simulator</h1>
-  <label for="goldInput">Gold per day:</label>
-  <input type="number" id="goldInput" value="50" />
-  <button onclick="simulate()">Simulate</button>
-  <canvas id="goldChart" width="600" height="400"></canvas>
-
-    <script>
-    function simulate() {
-      const goldPerDay = parseInt(document.getElementById('goldInput').value);
-      const days = 30;
-      const data = [];
-      let total = 0;
-
-      for (let i = 1; i <= days; i++) {
-        total += goldPerDay;
-        data.push(total);
-      }
-
-      const ctx = document.getElementById('goldChart').getContext('2d');
-      if (window.goldChartInstance) {
-        window.goldChartInstance.destroy();
-      }
-
-      window.goldChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: Array.from({ length: days }, (_, i) => `Day ${i + 1}`),
-          datasets: [{
-            label: 'Accumulated Gold',
-            data: data,
-            fill: false,
-            borderColor: 'gold',
-            tension: 0.2
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { display: true },
-            title: {
-              display: true,
-              text: 'Gold Accumulation Over 30 Days'
-            }
-          }
-        }
-      });
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
