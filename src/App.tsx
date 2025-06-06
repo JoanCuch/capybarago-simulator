@@ -1,6 +1,6 @@
 // src/App.tsx
 
-import { chapterSimulation, type SimulationResult } from './logic/chapterSimulation';
+import { chapterSimulation, type ChapterDailyResult } from './logic/chapterSimulation';
 import { StatsChart } from './components/StatsChart';
 import { StatsTable } from './components/StatsTable';
 
@@ -9,7 +9,7 @@ const SIMULATION_CONFIG = {
 };
 
 function App() {
-  const simulationData: SimulationResult[] = chapterSimulation(SIMULATION_CONFIG.days);
+  const simulationData: ChapterDailyResult[] = chapterSimulation(SIMULATION_CONFIG.days);
 
   return (
     <div style={{ padding: '2em', maxWidth: 600, margin: 'auto' }}>

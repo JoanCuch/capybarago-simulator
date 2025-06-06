@@ -4,34 +4,33 @@ import { PlayerCharacter } from './PlayerCharacter';
 import { Event } from './Event';
 import { EVENTS } from '../config/events';
 import { combatSimulation } from './combatSimulation';
-import type { SimulationResult } from './chapterSimulation';
+
+export type DayResult = {
+    day: number;
+    event?: string;
+    combat?: string;
+}
 
 export function daySimulation(
   day: number,
-  totalDays: number,
   player: PlayerCharacter
-): SimulationResult {
+): DayResult {
   const isEvent = Math.random() < 0.7;
 
   if (isEvent) {
     const event = pickRandomEvent();
     event?.apply(player);
-    const isDead = player.isDead();
 
     return {
       day,
-      stats: player.getStats(),
       event: event?.name,
-      status: isDead ? 'dead' : day === totalDays ? 'win' : 'alive',
     };
   } else {
     const combatResult = combatSimulation(player);
 
     return {
       day,
-      stats: player.getStats(),
       combat: combatResult,
-      status: player.isDead() ? 'dead' : day === totalDays ? 'win' : 'alive',
     };
   }
 }

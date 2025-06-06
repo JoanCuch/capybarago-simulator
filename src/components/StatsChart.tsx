@@ -1,11 +1,11 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip } from 'chart.js';
-import type { SimulationResult } from '../logic/chapterSimulation';
+import type { ChapterDailyResult } from '../logic/chapterSimulation';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend, Tooltip);
 
 type Props = {
-  data: SimulationResult[];
+  data: ChapterDailyResult[];
 };
 
 export function StatsChart({ data }: Props) {

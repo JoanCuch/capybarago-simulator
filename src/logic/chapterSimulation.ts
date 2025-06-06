@@ -2,24 +2,64 @@
 
 import { PlayerCharacter } from './PlayerCharacter';
 import { INITIAL_PLAYER } from '../config/character';
-import { daySimulation } from './daySimulation';
+import { daySimulation, type DayResult } from './daySimulation';
 
-export type SimulationResult = {
+export type ChapterDailyResult = {
   day: number;
-  stats: { atk: number; def: number; hp: number };
   event?: string;
   combat?: string;
-  status: 'alive' | 'dead' | 'win';
+  stats: { atk: number; def: number; hp: number };
+  delta?: { atk: number; def: number; hp: number };
+  status: ChapterRunStatus;
 };
 
-export function chapterSimulation(totalDays: number): SimulationResult[] {
-  const results: SimulationResult[] = [];
-  const player = INITIAL_PLAYER.clone();
+export const ChapterStatus = {
+  Ongoing: 'ongoing',
+  Win: 'win',
+  Lose: 'lose',
+} as const;
+
+export type ChapterRunStatus = (typeof ChapterStatus)[keyof typeof ChapterStatus];
+
+export function chapterSimulation(totalDays: number): ChapterDailyResult[] {
+  const results: ChapterDailyResult[] = [];
+  let player = INITIAL_PLAYER.clone();
+  let previousStats = player.getStats();
+  let status: ChapterRunStatus = ChapterStatus.Ongoing;
+
 
   for (let day = 1; day <= totalDays; day++) {
-    const result = daySimulation(day, totalDays, player);
-    results.push(result);
-    if (result.status === 'dead' || result.status === 'win') break;
+
+    //Simulate the day
+    const dayResult : DayResult  = daySimulation(day,player);
+
+    //Compare to previus day
+    const currentStats = player.getStats();
+    const deltaStats = {
+      atk: currentStats.atk - previousStats.atk,
+      def: currentStats.def - previousStats.def,
+      hp: currentStats.hp - previousStats.hp,
+    };
+
+    // Chest chapter status
+    if (player.isDead()) {
+      status = ChapterStatus.Lose;
+    } else if (day === totalDays) {
+      status = ChapterStatus.Win;
+    }
+
+    results.push({
+      day,
+      event: dayResult.event,
+      combat: dayResult.combat,
+      stats: currentStats,
+      delta: deltaStats,
+      status
+    });
+
+    if (status === ChapterStatus.Lose) break;
+
+    previousStats = currentStats;
   }
 
   return results;
