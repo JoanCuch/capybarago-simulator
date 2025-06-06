@@ -1,13 +1,14 @@
 // chapterSimulation.ts
 
-import { PlayerCharacter } from './PlayerCharacter';
 import { INITIAL_PLAYER } from '../config/character';
 import { daySimulation, type DayResult } from './daySimulation';
+import type { CombatTurnResult } from './combatSimulation';
 
 export type ChapterDailyResult = {
   day: number;
   event?: string;
   combat?: string;
+  combatLog?: CombatTurnResult[];
   stats: { atk: number; def: number; hp: number };
   delta?: { atk: number; def: number; hp: number };
   status: ChapterRunStatus;
@@ -52,9 +53,10 @@ export function chapterSimulation(totalDays: number): ChapterDailyResult[] {
       day,
       event: dayResult.event,
       combat: dayResult.combat,
+      combatLog: dayResult.combatLog,
       stats: currentStats,
       delta: deltaStats,
-      status
+      status,
     });
 
     if (status === ChapterStatus.Lose) break;

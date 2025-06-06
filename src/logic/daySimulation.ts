@@ -4,11 +4,15 @@ import { PlayerCharacter } from './PlayerCharacter';
 import { Event } from './Event';
 import { EVENTS } from '../config/events';
 import { combatSimulation } from './combatSimulation';
+import { enemies } from '../config/enemyPool';
+import type { Enemy } from './Enemy';
+import type { CombatTurnResult } from './combatSimulation';
 
 export type DayResult = {
     day: number;
     event?: string;
     combat?: string;
+    combatLog?: CombatTurnResult[];
 }
 
 export function daySimulation(
@@ -26,11 +30,15 @@ export function daySimulation(
       event: event?.name,
     };
   } else {
-    const combatResult = combatSimulation(player);
+    const enemy = getRandomEnemy();
+    const combatLog = combatSimulation(player, enemy);
+    const lastTurn = combatLog[combatLog.length - 1];
+    player.hp = lastTurn.playerStats.hp;
 
     return {
       day,
-      combat: combatResult,
+      combat: enemy.type,
+      combatLog,
     };
   }
 }
@@ -44,4 +52,10 @@ function pickRandomEvent(): Event | undefined {
     if (roll < acc) return event;
   }
   return undefined;
+}
+
+function getRandomEnemy(): Enemy {
+  const keys = Object.keys(enemies);
+  const randomKey = keys[Math.floor(Math.random() * keys.length)];
+  return { ...enemies[randomKey] };
 }
