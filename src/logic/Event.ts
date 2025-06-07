@@ -1,24 +1,32 @@
 import { PlayerCharacter } from './PlayerCharacter';
 
+export const EVENT_TAGS = {
+  StatIncrease: 'statIncrease',
+  StatDecrease: 'statDecrease',
+  Combat: 'combat',
+} as const;
+
+export type EventTag = typeof EVENT_TAGS[keyof typeof EVENT_TAGS];
+
 export class Event {
   name: string;
-  description: string;
-  chance?: number;
-  applyEffect: (stats: PlayerCharacter) => void;
+  tag: EventTag;
+  applyEffect?: (stats: PlayerCharacter) => void;
+  enemy?:string;
 
   constructor(
     name: string,
-    description: string,
-    applyEffect: (stats: PlayerCharacter) => void,
-    chance?: number
+    tag: EventTag,
+    applyEffect?: (stats: PlayerCharacter) => void,
+    enemy?: string,
   ) {
     this.name = name;
-    this.description = description;
     this.applyEffect = applyEffect;
-    this.chance = chance;
+    this.tag = tag;
+    this.enemy = enemy;
   }
 
   apply(stats: PlayerCharacter): void {
-    this.applyEffect(stats);
+    this.applyEffect?.(stats);
   }
 }

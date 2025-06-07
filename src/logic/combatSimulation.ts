@@ -1,6 +1,6 @@
 import type { PlayerCharacter } from './PlayerCharacter';
 import type { Enemy } from './Enemy';
-
+import { enemies } from '../config/enemyPool';
 
 export type CombatTurnResult = {
   playerStats: { atk: number; def: number; hp: number };
@@ -51,8 +51,13 @@ function turnSimulation(
 
 export function combatSimulation(
   player: PlayerCharacter,
-  enemy: Enemy
+  enemyId: string
 ): CombatResult {
+  const enemy = enemies[enemyId];
+  if (!enemy) {
+    throw new Error(`Enemy with id "${enemyId}" not found.`);
+  }
+
   const result: CombatResult = [];
   const playerCopy = player.clone();
   const enemyCopy = { ...enemy };

@@ -4,10 +4,9 @@ import { simulateMultipleRuns, type AggregatedDay } from './logic/simulationAggr
 import { StatsChart } from './components/StatsChart';
 import { StatsTable } from './components/StatsTable';
 import { AggregatedTable } from './components/AggregatedTable';
+import { CHAPTERS_CONFIG } from './config/chaptersConfig';
 
-const SIMULATION_CONFIG = {
-  days: 10,
-};
+const SIMULATION_CONFIG = CHAPTERS_CONFIG[1];
 
 function App() {
   const [numRuns, setNumRuns] = useState(1);
@@ -15,10 +14,10 @@ function App() {
 
   const handleSimulate = () => {
     if (numRuns === 1) {
-      const result = chapterSimulation(SIMULATION_CONFIG.days);
+      const result = chapterSimulation(SIMULATION_CONFIG);
       setSimulationData(result);
     } else {
-      const aggregated = simulateMultipleRuns(numRuns, SIMULATION_CONFIG.days);
+      const aggregated = simulateMultipleRuns(numRuns, SIMULATION_CONFIG);
       setSimulationData(aggregated);
     }
   };
@@ -48,7 +47,7 @@ function App() {
               <StatsChart data={simulationData as ChapterDailyResult[]} />
             </>
           ) : (
-            <AggregatedTable data={simulationData as AggregatedDay[]} />
+            <AggregatedTable aggregatedDays={simulationData as AggregatedDay[]} />
           )}
         </>
       )}

@@ -13,20 +13,16 @@ export class PlayerCharacter {
     return new PlayerCharacter(this.atk, this.def, this.hp);
   }
 
-  applyDamage(amount: number): void {
-    this.hp -= amount;
-  }
-
-  heal(amount: number): void {
-    this.hp += amount;
-  }
-
-  boostAttack(amount: number): void {
+  modifyAtk(amount: number): void {
     this.atk += amount;
   }
 
-  boostDefense(amount: number): void {
+  modifyDef(amount: number): void {
     this.def += amount;
+  }
+
+  modifyHp (amount: number): void {
+    this.hp += amount;
   }
 
   isDead(): boolean {
