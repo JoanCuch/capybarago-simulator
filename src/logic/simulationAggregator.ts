@@ -1,6 +1,5 @@
 import { chapterSimulation } from './chapterSimulation';
 import type { ChapterDailyResult } from './chapterSimulation';
-import type { CHAPTERS_CONFIG } from '../config/chaptersConfig';
 import type { Chapter } from './Chapter';
 
 

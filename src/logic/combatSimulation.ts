@@ -1,5 +1,4 @@
 import type { PlayerCharacter } from './PlayerCharacter';
-import type { Enemy } from './Enemy';
 import { enemies } from '../config/enemyPool';
 
 export type CombatTurnResult = {

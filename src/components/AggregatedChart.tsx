@@ -8,9 +8,8 @@ import {
   Legend,
   Tooltip,
 } from 'chart.js';
-import { Line, Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { Chart } from 'react-chartjs-2';
-import React from 'react';
 import type { AggregatedDay } from '../logic/simulationAggregator';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Legend, Tooltip);

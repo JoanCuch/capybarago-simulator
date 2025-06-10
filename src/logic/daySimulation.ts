@@ -3,7 +3,6 @@
 import { PlayerCharacter } from './PlayerCharacter';
 import { Event } from './Event';
 import { combatSimulation } from './combatSimulation';
-import type { Enemy } from './Enemy';
 import type { CombatTurnResult } from './combatSimulation';
 
 export type DayResult = {
