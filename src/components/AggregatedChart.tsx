@@ -7,12 +7,24 @@ import {
   PointElement,
   Legend,
   Tooltip,
+  BarController,
+  LineController
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'react-chartjs-2';
 import type { AggregatedDay } from '../logic/simulationAggregator';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Legend, Tooltip);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  Legend,
+  Tooltip,
+  BarController,
+  LineController
+);
 
 type Props = {
   aggregatedDays: AggregatedDay[];
